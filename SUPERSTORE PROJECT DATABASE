@@ -24,15 +24,18 @@ VALUES
     (13, 'Slow Cooker', 'Appliances', 49.95, 30, 4.7),
     (14, 'Cutlery Set', 'Kitchen Supplies', 34.50, 40, 4.4),
     (15, 'Cozy Throw Blanket', 'Furnishings', 24.99, 100, 4.2);
+-- Prompt 1 Order by price
 
 SELECT * FROM superstore LIMIT 5;
 SELECT price
 FROM superstore
 ORDER BY price DESC;
--- Prompt 2
+-- Prompt 2 Total Price of Items in store
+
 SELECT SUM(price) AS total_price
 FROM superstore;
--- Prompt 3
+-- Prompt 3 Minimum price of Kitchensupplies in store
+
 SELECT MIN(price) AS minimum_price
 FROM superstore
 Where category = "Kitchen Supplies";
