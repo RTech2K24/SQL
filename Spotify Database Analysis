@@ -1,0 +1,73 @@
+For this project, I downloaded Spotify data from Kaggle.
+Then I created a table to insert Spotify data into.
+Finally, I performed analytics on the data using SQL. 
+
+- Creating the table: 
+CREATE TABLE BIT_DB.Spotifydata (
+id integer PRIMARY KEY,
+artist_name varchar NOT NULL,
+track_name varchar NOT NULL,
+track_id varchar NOT NULL,
+popularity integer NOT NULL,
+danceability decimal(4,3) NOT NULL,
+energy decimal(4,3) NOT NULL,
+key integer NOT NULL,
+loudness decimal(5,3) NOT NULL,
+mode integer NOT NULL,
+speechiness decimal(5,4) NOT NULL,
+acousticness decimal(6,5) NOT NULL,
+instrumentalness text NOT NULL,
+liveness decimal(5,4) NOT NULL,
+valence decimal(4,3) NOT NULL,
+tempo decimal(6,3) NOT NULL,
+duration_ms integer NOT NULL,
+time_signature integer NOT NULL 
+)
+
+- Then I inserted the Spotify Data .csv into the table.
+
+- Next, I explored the data using the following SQL. 
+----
+--What top 10 songs had the most replay value?
+SELECT artist_name, track_name, popularity
+FROM Bit_DB.Spotifydata
+ORDER BY popularity DESC
+LIMIT 10;
+-- Answer: Olivia Rodrigo	good 4 u	95
+Ed Sheeran	Bad Habits	95
+Glass Animals	Heat Waves	94
+Bad Bunny	Yonaguni	94
+The Weeknd	Blinding Lights	93
+Måneskin	Beggin'	93
+Doja Cat	Need to Know	93
+Olivia Rodrigo	drivers license	92
+The Kid LAROI	STAY (with Justin Bieber)	92
+Olivia Rodrigo	traitor	92
+
+--Average Dancibility by artist and track?
+SELECT artist_name, track_name, AVG(danceability) AS avg_danceability
+FROM Spotifydata
+GROUP BY artist_name, track_name;
+-- Answer: 24kGoldn	Mood (feat. iann dior)	0.701
+Ariana Grande	34+35	0.83
+Ariana Grande	positions	0.737
+BTS	Butter	0.759
+BTS	Dynamite	0.746
+Bad Bunny	DÁKITI	0.731
+Bad Bunny	LA NOCHE DE ANOCHE	0.856
+Bad Bunny	Yonaguni	0.644
+
+-- What artist released the longest song?
+SELECT artist_name, track_name, duration_ms
+FROM Spotifydata
+ORDER BY duration_ms DESC
+LIMIT 1;
+Answer: Farruko	Pepas	287120
+
+-- Artist with most streams
+SELECT artist_name, AVG(popularity) AS avg_popularity
+FROM Spotifydata
+GROUP BY artist_name
+ORDER BY avg_popularity DESC
+LIMIT 1;
+Answer:Ed Sheeran	95
