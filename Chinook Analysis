@@ -1,0 +1,88 @@
+Here is a quick project of Chinook.
+Below I have analyzed the invoices and sales of local and non local customers for 2009
+--
+
+-- Name of customers not in the US
+SELECT 
+    CustomerId, 
+    FirstName || ' ' || LastName AS FullName, 
+    Country
+FROM customers
+WHERE Country != 'US';
+-- Customers only in Brazil
+SELECT 
+    CustomerId, 
+    FirstName || ' ' || LastName AS FullName, 
+    Company, 
+    Address, 
+    City, 
+    State, 
+    Country, 
+    PostalCode, 
+    Phone, 
+    Fax, 
+    Email
+FROM customers
+WHERE Country = 'Brazil';
+-- Invoices of customers from Brazil
+SELECT 
+    c.FirstName || ' ' || c.LastName AS FullName, 
+    i.InvoiceId, 
+    i.InvoiceDate, 
+    i.BillingCountry
+FROM 
+    customers c
+JOIN 
+    invoices i ON c.CustomerId = i.CustomerId
+WHERE 
+    c.Country = 'Brazil';
+-- What are the total sales for 2009?
+SELECT 
+    SUM(Total) AS TotalSales2009
+FROM 
+    invoices
+WHERE 
+    strftime('%Y', InvoiceDate) = '2009';
+-- Invoice total, customer name, country and sales names for invoice
+SELECT 
+    i.Total AS InvoiceTotal,
+    c.FirstName || ' ' || c.LastName AS CustomerName,
+    c.Country,
+    e.FirstName || ' ' || e.LastName AS SalesAgentName
+FROM 
+    invoices i
+JOIN 
+    customers c ON i.CustomerId = c.CustomerId
+JOIN 
+    employees e ON c.SupportRepId = e.EmployeeId;
+    
+SELECT 
+    i.Total AS InvoiceTotal,
+    c.FirstName || ' ' || c.LastName AS CustomerName,
+    c.Country,
+    e.FirstName || ' ' || e.LastName AS SalesAgentName
+FROM 
+    invoices i
+JOIN 
+    customers c ON i.CustomerId = c.CustomerId
+JOIN 
+    employees e ON c.SupportRepId = e.EmployeeId;
+-- In 2009 How many invoices were there?
+SELECT 
+    COUNT(*) AS TotalInvoices2009
+FROM 
+    invoices
+WHERE 
+    strftime('%Y', InvoiceDate) = '2009';
+
+
+
+
+
+
+ 
+
+
+
+
+
